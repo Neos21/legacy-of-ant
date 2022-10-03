@@ -1,1 +1,3 @@
+# XML を言語判定に認識させ、かつ Ant スクリプトと明示する
+*.xml linguist-detectable=true
 *.xml linguist-language=Ant-Build-System
