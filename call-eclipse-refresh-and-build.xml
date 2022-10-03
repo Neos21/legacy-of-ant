@@ -1,0 +1,39 @@
+<!--
+  Eclipse の「プロジェクト設定に従い WAR ファイルを作成」で生成できる WAR とほぼ同一の内容を作る Ant スクリプト
+  
+  - [Ant から Eclipse ワークスペースのリフレッシュやフルビルドを行う](https://neos21.net/blog/2016/03/31-01.html)
+-->
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="myAnt" default="createWar" basedir=".">
+  <!--
+    ルートディレクトリの設定
+    
+    - [Ant で別ディレクトリの build.xml を呼び出すと basedir がズレるのを解消する](https://neos21.net/blog/2016/03/30-01.html)
+  -->
+  <dirname property="base" file="${ant.file}"/>
+  
+  <!-- プロジェクトのビルド -->
+  <target name="buildProject">
+    <!-- 予めプロジェクトをリフレッシュしておく -->
+    <eclipse.refreshLocal resource="myProject" depth="infinite"/>
+    <!-- プロジェクトをフルビルドする -->
+    <eclipse.incrementalBuild project="myProject" kind="full"/>
+  </target>
+  
+  <!-- WAR ファイルを作る -->
+  <target name="createWar" depends="buildProject">
+    <!-- 前回の Ant 実行で作成されている WAR ファイルを消しておく -->
+    <delete file="${base}/myProject.war"/>
+    <!-- WAR ファイルを作る -->
+    <war destfile="${base}/myProject.war" webxml="${base}/WEB-INF/web.xml">
+      <classes dir="${base}WEB-INF/classes"/>
+      <lib dir="${base}/WEB-INF"/>
+      <fileset dir="${base"}>
+        <exclude name="**/src/**/*"/>
+        <exclude name="**/src"/>
+        <exclude name="**/work/**/*"/>
+        <exclude name="**/work"/>
+      </fileset>
+    </war>
+  </target>
+</project>

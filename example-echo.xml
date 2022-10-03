@@ -1,0 +1,9 @@
+<!--
+  - [Eclipse 上で実行した Ant から日本語がコンソール出力されない場合は](https://neos21.net/blog/2016/03/22-01.html)
+-->
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="testProject" default="all" basedir=".">
+  <target name="all">
+    <echo message="日本語で Echo を出力"/>
+  </target>
+</project>
